@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="session.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="neck.cpp" />
     <ClCompile Include="timer.cpp" />
@@ -149,7 +150,7 @@
   <ItemGroup>
     <ClInclude Include="headers.h" />
     <ClInclude Include="neck.h" />
-    <ClInclude Include="app.h" />
+    <ClInclude Include="session.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3,7 +3,8 @@
 #include <ctime>
 #include <conio.h>
 #include "timer.h"
-#include "hero.h"
 #include "neck.h"
-#include "app.h"
+#include "session.h"
 #include "neck.h"
+
+enum side {LEFT, NONE, RIGHT};

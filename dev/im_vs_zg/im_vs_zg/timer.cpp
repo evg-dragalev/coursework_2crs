@@ -31,6 +31,7 @@ int Timer::RunTick() {
 		if (kbhit()) {
 			keyCode = ((keyCode = getch()) == 224) ? getch() : keyCode;
 			if (keyCode == 27 || keyCode == 77 || keyCode == 75) break;
+			keyCode = 0;
 		}
 	}
 	return keyCode;

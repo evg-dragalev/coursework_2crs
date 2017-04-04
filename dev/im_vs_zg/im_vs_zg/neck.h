@@ -3,7 +3,7 @@
 class Neck {
 	struct NeckSegment{
 		bool bIsEven;
-		int iFrame; // -1 - шип слева, 0 - чисто, 1 - шип справа
+		side spikeSide; // 
 		NeckSegment* next;
 	};
 	NeckSegment* front;
@@ -11,5 +11,7 @@ class Neck {
 public:
 	Neck();
 	void cyclePop();
-	int getFrontFrame();
+	side getCurrSpikeSide();
+	side getNextSideSpike();
+
 };

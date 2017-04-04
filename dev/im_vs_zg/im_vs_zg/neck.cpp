@@ -4,10 +4,10 @@
 void Neck::setSegmentFrame(NeckSegment a) {
 	if (a.bIsEven) {
 		srand(time(0));
-		a.iFrame = rand() % 3;
+		a.spikeSide = (side)(rand() % 3);
 	}
 	else {
-		a.iFrame = 0;
+		a.spikeSide = side(0);
 	}
 }
 
@@ -18,9 +18,9 @@ Neck::Neck() {
 
 	NeckSegment* pointer = front;
 	for (int i = 0; i < 5; i++) {
-		pointer->next = new NeckSegment(); //выделение памяти
+		pointer->next = new NeckSegment();			//выделение памяти
 		pointer->next->bIsEven = !pointer->bIsEven; //инициализация сегмента
-		setSegmentFrame(*(pointer->next));			//
+		setSegmentFrame(*(pointer->next));			//инициализация сегмента
 
 		pointer = pointer->next; 
 	}
@@ -37,6 +37,10 @@ void Neck::cyclePop(){
 	}
 }
 
-int Neck::getFrontFrame() {
-	return front->iFrame;
+side Neck::getCurrSpikeSide() {
+	return front->spikeSide;
+}
+
+side Neck::getNextSideSpike() {
+	return front->next->spikeSide;
 }
