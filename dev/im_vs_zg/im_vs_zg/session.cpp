@@ -1,6 +1,7 @@
 #include "headers.h"
 
 Session::Session() {
+	drawer = new Drawer;
 	neck = new Neck;
 	timer = new Timer;
 	heroPosition = LEFT;
@@ -10,7 +11,7 @@ Session::Session() {
 
 bool Session::chopResult(side chopSide) {
 	if (neck->getCurrSpikeSide == chopSide || neck->getNextSideSpike == chopSide) {
-		std::cout << "game over";  //Конец игры
+		//Конец игры
 		heroPosition = chopSide;
 		return false;
 	}
@@ -34,6 +35,7 @@ void Session::runSession() {
 			continue;
 			break;
 		case 27: //esc
+
 			gameOver = true;
 			break;
 		case 77: //стрелка вправо

@@ -1,4 +1,7 @@
 #include "headers.h"
 
-int main() {	
+int main() {
+
+	Neck neck;
+	
 }

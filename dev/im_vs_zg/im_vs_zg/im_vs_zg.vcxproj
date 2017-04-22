@@ -142,12 +142,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="drawer.cpp" />
     <ClCompile Include="session.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="neck.cpp" />
     <ClCompile Include="timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="drawer.h" />
     <ClInclude Include="headers.h" />
     <ClInclude Include="neck.h" />
     <ClInclude Include="session.h" />

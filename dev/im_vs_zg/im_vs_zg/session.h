@@ -2,6 +2,7 @@
 #include "headers.h"
 
 class Session {
+	Drawer* drawer;
 	Neck* neck;
 	Timer* timer;
 	side heroPosition; 
