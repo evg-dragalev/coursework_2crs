@@ -7,6 +7,5 @@
 #include "timer.h"
 #include "neck.h"
 #include "session.h"
-#include "drawer.h"
 
-enum side {LEFT, NONE, RIGHT};
+enum side { LEFT, NONE, RIGHT };

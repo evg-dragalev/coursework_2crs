@@ -10,7 +10,7 @@ Session::Session() {
 
 
 bool Session::chopResult(side chopSide) {
-	if (neck->getCurrSpikeSide == chopSide || neck->getNextSideSpike == chopSide) {
+	if (neck->getCurrSpikeSide() == chopSide || neck->getNextSideSpike() == chopSide) {
 		//Конец игры
 		heroPosition = chopSide;
 		return false;

@@ -1,5 +1,6 @@
 #pragma once
 #include "headers.h"
+#include "drawer.h"
 
 class Session {
 	Drawer* drawer;
