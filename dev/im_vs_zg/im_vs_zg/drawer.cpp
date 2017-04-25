@@ -101,7 +101,21 @@ void Drawer::drawTimer(int timerTicks) {
 	strncpy(outString + 54, timeString, timerTicks);
 }
 
+void Drawer::drawGameOver(int scores) {
+	for (int i = 0; i < 19; i++) {
+		strncpy(outString + (4+i)*87 + 14, gameOver[i], 59);
+	}
 
+	scores = scores % 1000;
+	strncpy(outString + 22 * 87 + 36, scoresFrame[3], 12);
+	for (int i = 0; i < 3; i++) {
+		strncpy(outString + (23 + i) * 87 + 36, scoresFrame[1], 12);
+		strncpy(outString + (23 + i) * 87 + 38, digits[scores / 100][i], 2);
+		strncpy(outString + (23 + i) * 87 + 41, digits[(scores / 10) % 10][i], 2);
+		strncpy(outString + (23 + i) * 87 + 44, digits[scores % 10][i], 2);
+	}
+	strncpy(outString + 26 * 87 + 36, scoresFrame[2], 12);
+}
 
 void Drawer::drawScene(side* neckSpikesSeq, side heroPosition, int timerTicks, int scores) {
 	drawTimer(timerTicks);

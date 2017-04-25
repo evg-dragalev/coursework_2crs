@@ -9,8 +9,7 @@ void displayNeck(Neck neck) {
 				<< spikeSeq[3] << std::endl;
 }
 
-int main() {
-	
+void checkNeck() {
 	Neck neck;
 	int key = 1;
 	while (key != 27) {
@@ -18,6 +17,20 @@ int main() {
 		key = ((key = _getch()) == 224) ? getch() : key;
 		neck.cyclePop();
 	}
+}
+
+void checkGameOver(int scores) {
+	Drawer drawer;
+	side neck[4] = { LEFT, NONE, RIGHT, NONE };
+	drawer.drawScene(neck, LEFT, 16, 200);
+	drawer.drawGameOver(scores);
+	drawer.updateScreen();
+}
+
+int main() {
+//	checkNeck();
+	checkGameOver(200);
+
 
 	_getch();
 	
