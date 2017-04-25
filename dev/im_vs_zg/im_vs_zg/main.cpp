@@ -3,10 +3,11 @@
 
 void displayNeck(Neck neck) {
 	side* spikeSeq = neck.getSpikeSeq();
-	std::cout << spikeSeq[0] << " "
-				<< spikeSeq[1] << " "
-				<< spikeSeq[2] << " "
-				<< spikeSeq[3] << std::endl;
+	for (int i = 0; i < 4; i++) {
+		std::cout << spikeSeq[i];
+		std::cout << ", ";
+	}
+	std::cout << std::endl;
 }
 
 void checkNeck() {
@@ -27,10 +28,24 @@ void checkGameOver(int scores) {
 	drawer.updateScreen();
 }
 
+void checkDrawer() {
+	Drawer drawer;
+	Neck neck;
+
+	drawer.drawTimer(15);
+	drawer.drawNeck(neck.getSpikeSeq());
+	drawer.drawScores(0);
+	drawer.drawHero(LEFT);
+	drawer.updateScreen();
+}
+
 int main() {
 //	checkNeck();
-	checkGameOver(200);
-
+//	checkGameOver(200);
+//	checkDrawer();
+	system("MODE CON: COLS=88 LINES=35");
+	Session session;
+	session.run();
 
 	_getch();
 	

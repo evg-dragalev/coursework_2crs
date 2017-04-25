@@ -11,7 +11,6 @@ class Session {
 public:
 	Session();
 	bool chopResult(side chopSide); //возвращает true если успешно, иначе false
-	void runSession();
-	void draw();
+	void run();
 	void restart();
 };

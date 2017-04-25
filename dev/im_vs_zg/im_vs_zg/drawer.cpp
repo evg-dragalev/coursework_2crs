@@ -76,7 +76,12 @@ void Drawer::drawHero(side heroSide){
 	}
 }
 
-void Drawer::drawGrave(side heroSide) {
+void Drawer::drawGrave(side neckCurrSeg, side heroSide) {
+	for (int j = 0; j < 8; j++) {
+		strncpy(outString + (25 + j) * 87 + 16, neckFrames[neckCurrSeg][j], 52);
+	}
+	strncpy(outString + 24 * 87 + 16, "                 ", 17);
+	strncpy(outString + 24 * 87 + 52, "                 ", 17);
 	if (heroSide == LEFT) {
 		for (int i = 0; i < 6; i++) {
 			strncpy(outString + (i + 27) * 87 + 22, heroDeadL[i], 11);
@@ -92,13 +97,14 @@ void Drawer::drawGrave(side heroSide) {
 void Drawer::drawNeck(side* neckSpikesSeq) {
 	for (int i = 0; i < Neck::VISIBLE_NECK_SEGM_AMOUNT; i++) {
 		for (int j = 0; j < 8; j++) {
-			strncpy(outString + (1 + i * 8 + j) * 87 + 20, neckFrames[*(neckSpikesSeq + i)][j], 44);
+			strncpy(outString + (1 + i * 8 + j) * 87 + 16, neckFrames[*(neckSpikesSeq + i)][j], 52);
 		}
 	}
 }
 
 void Drawer::drawTimer(int timerTicks) {
-	strncpy(outString + 54, timeString, timerTicks);
+	strncpy(outString + 54, timeStrings[0], 22);
+	strncpy(outString + 54, timeStrings[1], timerTicks);
 }
 
 void Drawer::drawGameOver(int scores) {
@@ -126,17 +132,14 @@ void Drawer::drawScene(side* neckSpikesSeq, side heroPosition, int timerTicks, i
 		drawHero(heroPosition);
 	}
 	if (heroPosition == neckSpikesSeq[3]) {
-		drawGrave(heroPosition);
+		drawGrave(neckSpikesSeq[3], heroPosition);
 	}
 
 	drawScores(1);
 
 }
 
-void Drawer::drawChop(side* neckSpikesSeq, side heroPosition, int timerTicks, int scores) {
-	drawNeck(neckSpikesSeq);
-	drawTimer(timerTicks);
-	drawScores(scores);
+void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 	if (heroPosition == LEFT) {
 		strncpy(outString + 23 * 87 + 16, heroLeftAtc[0], 12);
 		for (int i = 1; i < 9; i++) {
@@ -144,7 +147,7 @@ void Drawer::drawChop(side* neckSpikesSeq, side heroPosition, int timerTicks, in
 		}
 		strncpy(outString + 32 * 87 + 16, heroLeftAtc[9], 15);
 
-		if (neckSpikesSeq[3] == RIGHT) {
+		if (neckCurrSeg == RIGHT) {
 			for (int i = 0; i < 7; i++) {
 				strncpy(outString + (i + 25) * 87 + 44, CrashFromLeftSpike[i], 21);
 			}
@@ -163,7 +166,7 @@ void Drawer::drawChop(side* neckSpikesSeq, side heroPosition, int timerTicks, in
 		}
 		strncpy(outString + 32 * 87 + 52, heroRightAtc[9], 15);
 
-		if (neckSpikesSeq[3] == LEFT) {
+		if (neckCurrSeg == LEFT) {
 			for (int i = 0; i < 7; i++) {
 				strncpy(outString + (i + 25) * 87 + 19, CrashFromRightSpike[i], 21);
 			}

@@ -8,46 +8,82 @@ Session::Session() {
 	iScores = 0;
 }
 
-
 bool Session::chopResult(side chopSide) {
-	if (neck->getCurrSpikeSide() == chopSide || neck->getNextSideSpike() == chopSide) {
-		//Конец игры
-		heroPosition = chopSide;
+	heroPosition = chopSide;
+	side spikeSide = neck->getCurrSpikeSide();
+	if (spikeSide == heroPosition) {
+		drawer->drawGrave(spikeSide, heroPosition);
+		drawer->updateScreen();
 		return false;
-	}
+	} 
 	else {
-		heroPosition = chopSide;
-		neck->cyclePop();
 		iScores++;
-		timer->AddTick();
-		return true;
+		timer->addTick();
+		drawer->drawTimer(timer->getTicks());
+		drawer->drawScores(iScores);
+		drawer->drawChop(spikeSide, heroPosition);
+		drawer->updateScreen();
+		neck->cyclePop();
+		spikeSide = neck->getCurrSpikeSide();
+		if (spikeSide == heroPosition) {
+			drawer->drawNeck(neck->getSpikeSeq());
+			drawer->drawScores(iScores);
+			drawer->drawGrave(spikeSide, heroPosition);
+			drawer->updateScreen();
+			return false;
+		}
+		else {
+			drawer->drawNeck(neck->getSpikeSeq());
+			drawer->drawScores(iScores);
+			drawer->drawHero(heroPosition);
+			drawer->updateScreen();
+			return true;
+		}
+
 	}
 }
 
-void Session::runSession() {
-	int keyCode;
-	bool gameOver = false;
-	while (!gameOver) {
-		keyCode = timer->RunTick();
-		switch (keyCode) {
-		case 0: //ничего не нажато, "тик" прошел
-			timer->SubstrTick();
-			continue;
-			break;
-		case 27: //esc
+void Session::run() {
+	drawer->drawTimer(timer->getTicks());
+	drawer->drawNeck(neck->getSpikeSeq());
+	drawer->drawScores(iScores);
+	drawer->drawHero(heroPosition);
+	drawer->updateScreen();
+//	std::cout << "[Session.run]: screen updated";
+	int iKeyCode;
+	bool bGameOver = false;
 
-			gameOver = true;
-			break;
-		case 77: //стрелка вправо
-			gameOver = !chopResult(RIGHT);
-			break;
-		case 75: //стрелка влево
-			gameOver = !chopResult(LEFT);
-			break;
-		default:
-			throw "error";
-			break;
+	if ( getch() ) {
+//		std::cout << "[Session.run]: in if";
+		
+		while (!bGameOver) {
+			iKeyCode = timer->runTick();
+			switch (iKeyCode) {
+			case 0: //ничего не нажато, "тик" прошел
+				if (timer->getTicks() == 0) {
+					bGameOver = true;
+				} 
+				else {
+					timer->substrTick();
+					drawer->drawTimer(timer->getTicks());
+					drawer->updateScreen();
+				}
+				break;
+			case 27: //esc
+				bGameOver = true;
+				break;
+			case 77: //стрелка вправо
+				bGameOver = !chopResult(RIGHT);
+				break;
+			case 75: //стрелка влево
+				bGameOver = !chopResult(LEFT);
+				break;
+			default:
+				throw "error";
+				break;
+			}
 		}
-
+		drawer->drawGameOver(iScores);
+		drawer->updateScreen();
 	}
 }

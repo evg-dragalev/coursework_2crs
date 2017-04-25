@@ -61,7 +61,7 @@ side Neck::getNextSpikeSide() {
 	return front->next->spikeSide;
 }
 side* Neck::getSpikeSeq() {
-	side spikeSeq[VISIBLE_NECK_SEGM_AMOUNT];
+	side* spikeSeq = new side[VISIBLE_NECK_SEGM_AMOUNT];
 	NeckSegment *p = front;
 	for (int i = VISIBLE_NECK_SEGM_AMOUNT - 1; i >= 0; i--) {
 		spikeSeq[i] = p->spikeSide;

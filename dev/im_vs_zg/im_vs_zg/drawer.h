@@ -5,12 +5,12 @@ class Drawer {
 public:
 	Drawer();
 	void drawHero(side heroSide);
-	void drawGrave(side heroSide);
+	void drawGrave(side neckCurrSeg, side heroSide);
 	void drawNeck(side* neckSpikesSeq);
 	void drawTimer(int timeTicks);
 	void drawGameOver(int scores);
+	void drawChop(side neckCurrSeg, side heroPosition);
 	void   drawScene(side* neckSpikesSeq, side heroPosition, int timerticks, int scores);
-	void   drawChop(side* neckSpikesSeq, side heroPosition, int timerticks, int scores);
 	void updateScreen();
 	void drawScores(int scores);
 private:
@@ -25,7 +25,10 @@ private:
 
 
 	char outString[3046];//35*87+1
-	char timeString[23] = "\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB";
+	char timeStrings[2][23] = {
+		"______________________",
+		"\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB\xDB"
+	};
 	const char scoresFrame[4][13] = {
 		"\xDA\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xC4\xBF",
 		"\xB3          \xB3",
@@ -186,36 +189,36 @@ private:
 		" /  ----  \\"
 	};
 
-	const char neckFrames[3][8][45] = {
+	const char neckFrames[3][8][53] = {
 		{
-			"       __/--/<><>           ><>\\            ",
-			"    __/  ///<>               ><>            ",
-			"  _/  ///// \\<>             ><>/            ",
-			"-<_<<<<<<<   ><><><    ><><><><             ",
-			"   \\__\\\\\\\\\\ /<><>           ><>\\            ",
-			"      \\__\\\\\\<>                <>            ",
-			"         \\--\\<>             ><>/            ",
-			"             ><><><>    <><><><             "
+			"           __/--/<><>           ><>\\                ",
+			"        __/  ///<>               ><>                ",
+			"      _/  ///// \\<>             ><>/                ",
+			"    -<_<<<<<<<   ><><><    ><><><><                 ",
+			"       \\__\\\\\\\\\\ /<><>           ><>\\                ",
+			"          \\__\\\\\\<>                <>                ",
+			"             \\--\\<>             ><>/                ",
+			"                 ><><><>    <><><><                 "
 		},
 		{
-			"            /<><>           ><>\\            ",
-			"            <>                <>            ",
-			"            \\<>             ><>/            ",
-			"             ><><><    ><><><><             ",
-			"            /<><>           ><>\\            ",
-			"            <>                <>            ",
-			"            \\<>             ><>/            ",
-			"             ><><><>    <><><><             "
+			"                /<><>           ><>\\                ",
+			"                <>                <>                ",
+			"                \\<>             ><>/                ",
+			"                 ><><><    ><><><><                 ",
+			"                /<><>           ><>\\                ",
+			"                <>                <>                ",
+			"                \\<>             ><>/                ",
+			"                 ><><><>    <><><><                 "
 		},
 		{
-			"            /<><>           ><>\\--\\__       ",
-			"            <>                <>\\\\\\  \\__    ",
-			"            \\<>             ><>/ \\\\\\\\\\  \\_  ",
-			"             ><><><    ><><><><   >>>>>>>_>-",
-			"            /<><>           ><>\\ /////__/   ",
-			"            <>                <>///__/      ",
-			"            \\<>             ><>/--/         ",
-			"             ><><><>    <><><><             "
+			"                /<><>           ><>\\--\\__           ",
+			"                <>                <>\\\\\\  \\__        ",
+			"                \\<>             ><>/ \\\\\\\\\\  \\_      ",
+			"                 ><><><    ><><><><   >>>>>>>_>-    ",
+			"                /<><>           ><>\\ /////__/       ",
+			"                <>                <>///__/          ",
+			"                \\<>             ><>/--/             ",
+			"                 ><><><>    <><><><                 "
 		}
 	};
 	const char frame[4][88] = {
