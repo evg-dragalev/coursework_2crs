@@ -1,4 +1,6 @@
 #include "headers.h"
+const int Neck::NECK_SEGM_AMOUNT = 5;
+const int Neck::VISIBLE_NECK_SEGM_AMOUNT = 4;
 
 void Neck::setSegmentFrame(NeckSegment* a) {
 	if (a->bIsEven) {
@@ -31,7 +33,7 @@ Neck::Neck() {
 	setSegmentFrame(front);
 
 	NeckSegment* pointer = front;
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < NECK_SEGM_AMOUNT; i++) {
 		pointer->next = new NeckSegment();			//выделение памяти
 		pointer->next->bIsEven = !pointer->bIsEven; //инициализация сегмента
 		setSegmentFrame(pointer->next);			//инициализация сегмента
@@ -55,15 +57,15 @@ side Neck::getCurrSpikeSide() {
 	return front->spikeSide;
 }
 
-side Neck::getNextSideSpike() {
+side Neck::getNextSpikeSide() {
 	return front->next->spikeSide;
 }
 side* Neck::getSpikeSeq() {
-	side spikeSeq[4]{
-		front->next->next->next->spikeSide,
-		front->next->next->spikeSide,
-		front->next->spikeSide,
-		front->spikeSide
-	};
+	side spikeSeq[VISIBLE_NECK_SEGM_AMOUNT];
+	NeckSegment *p = front;
+	for (int i = VISIBLE_NECK_SEGM_AMOUNT - 1; i >= 0; i--) {
+		spikeSeq[i] = p->spikeSide;
+		p = p->next;
+	}
 	return spikeSeq;
 }

@@ -90,7 +90,7 @@ void Drawer::drawGrave(side heroSide) {
 }
 
 void Drawer::drawNeck(side* neckSpikesSeq) {
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < Neck::VISIBLE_NECK_SEGM_AMOUNT; i++) {
 		for (int j = 0; j < 8; j++) {
 			strncpy(outString + (1 + i * 8 + j) * 87 + 20, neckFrames[*(neckSpikesSeq + i)][j], 44);
 		}

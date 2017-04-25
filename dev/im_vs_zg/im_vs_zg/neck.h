@@ -9,13 +9,15 @@ struct NeckSegment {
 };
 
 class Neck {
+	static const int NECK_SEGM_AMOUNT;
 	NeckSegment* front;
 	void setSegmentFrame(NeckSegment* a);
 public:
+	static const int VISIBLE_NECK_SEGM_AMOUNT;
 	Neck();
 	void cyclePop();
 	side getCurrSpikeSide();
-	side getNextSideSpike();
+	side getNextSpikeSide();
 	side* getSpikeSeq();
 
 };
