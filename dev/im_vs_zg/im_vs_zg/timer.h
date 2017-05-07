@@ -2,15 +2,21 @@
 
 
 class Timer {
-	int* iTicks;
-	double* dTickLength;
+	int* piTicks;
+	double* pdTickLength;
 public:
 	static const int MAX_TICKS_AMOUNT;
 	static const double START_TICKS_LENGTH;
+	static const double MIN_TICK_LENGTH;
 	Timer();
 	void decreaseTickLength();
 	void addTick();
 	void substrTick();
-	int getTicks();
-	int runTick();
+	int runTick(double dTick);
+	int getTicks() {
+		return *piTicks;
+	};
+	double getTickLength() {
+		return *pdTickLength;
+	}
 };

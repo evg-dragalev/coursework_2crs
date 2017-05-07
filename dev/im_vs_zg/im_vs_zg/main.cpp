@@ -43,10 +43,17 @@ int main() {
 //	checkNeck();
 //	checkGameOver(200);
 //	checkDrawer();
-	system("MODE CON: COLS=88 LINES=35");
-	Session session;
-	session.run();
+	system("MODE CON: COLS=88 LINES=38");
+	Session *session = new Session();
+	session->run();
 
-	_getch();
+	int key = 1;
+	while (key != 27) {
+		session->~Session();
+		session = new Session();
+		session->run();
+
+		key = ((key = _getch()) == 224) ? getch() : key;
+	}
 	
 }
