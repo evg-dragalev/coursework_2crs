@@ -5,15 +5,17 @@ const int Neck::VISIBLE_NECK_SEGM_AMOUNT = 4;
 void Neck::setSegmentFrame(NeckSegment* a) {
 	if (a->bIsEven) {
 		srand(time(0)); 
-		int r = rand() % 3;
+		int r = rand() % 5;
 		switch (r) {
 		case 0:
+		case 1:
 			a->spikeSide = LEFT;
 			break;
-		case 1:
+		case 2:
 			a->spikeSide = NONE;
 			break;
-		case 2:
+		case 3:
+		case 4:
 			a->spikeSide = RIGHT;
 			break;
 		default:
