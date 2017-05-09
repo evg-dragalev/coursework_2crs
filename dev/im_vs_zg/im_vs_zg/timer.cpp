@@ -11,7 +11,6 @@ Timer::Timer() {
 
 void Timer::decreaseTickLength() {
 	*pdTickLength -= (*pdTickLength < MIN_TICK_LENGTH) ? 0 : ((*pdTickLength) / START_TICKS_LENGTH )/10;
-	std::cout << "\n[Timer.decreaseTickLength, dTickLength]: " << *pdTickLength << std::endl;
 }
 
 void Timer::addTick() {

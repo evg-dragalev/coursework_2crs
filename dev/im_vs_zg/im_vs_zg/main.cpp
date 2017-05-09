@@ -23,19 +23,22 @@ void checkNeck() {
 void checkGameOver(int scores) {
 	Drawer drawer;
 	side neck[4] = { LEFT, NONE, RIGHT, NONE };
-	drawer.drawScene(neck, LEFT, 16, 200);
+//	drawer.drawScene(neck, LEFT, 16, 200);
 	drawer.drawGameOver(scores);
 	drawer.updateScreen();
 }
 
 void checkDrawer() {
 	Drawer drawer;
-	Neck neck;
 
+	side neck[4] = { LEFT, NONE, RIGHT, RIGHT };
+
+	drawer.drawFrame();
+	drawer.drawNeck(neck);
+	drawer.drawScores(222);
 	drawer.drawTimer(15);
-	drawer.drawNeck(neck.getSpikeSeq());
-	drawer.drawScores(0);
-	drawer.drawHero(LEFT);
+	drawer.drawGrave(neck[3], RIGHT);
+	drawer.drawGameOver(222);
 	drawer.updateScreen();
 }
 
@@ -43,17 +46,20 @@ int main() {
 //	checkNeck();
 //	checkGameOver(200);
 //	checkDrawer();
-	system("MODE CON: COLS=88 LINES=38");
+	Drawer::initDrawerPlatform();
+
+
 	Session *session = new Session();
 	session->run();
 
 	int key = 1;
 	while (key != 27) {
-		session->~Session();
-		session = new Session();
-		session->run();
-
+		if (key == 32) {
+			session->~Session();
+			session = new Session();
+			session->run();
+		}
 		key = ((key = _getch()) == 224) ? getch() : key;
 	}
-	
+
 }

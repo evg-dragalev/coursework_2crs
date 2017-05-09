@@ -12,6 +12,9 @@ bool Session::chopResult(side chopSide) {
 	heroPosition = chopSide;
 	side spikeSide = neck->getCurrSpikeSide();
 	if (spikeSide == heroPosition) {
+		drawer->drawTimer(timer->getTicks());
+		drawer->drawNeck(neck->getSpikeSeq());
+		drawer->drawScores(iScores);
 		drawer->drawGrave(spikeSide, heroPosition);
 		drawer->updateScreen();
 		return false;
@@ -19,11 +22,12 @@ bool Session::chopResult(side chopSide) {
 	else {
 		iScores++;
 		timer->addTick();
+
 		if (iScores % 5 == 0) {
 			timer->decreaseTickLength();
 		}
-		drawer->drawNeck(neck->getSpikeSeq());
 		drawer->drawTimer(timer->getTicks());
+		drawer->drawNeck(neck->getSpikeSeq());
 		drawer->drawScores(iScores);
 		drawer->drawChop(spikeSide, heroPosition);
 		drawer->updateScreen();
@@ -31,6 +35,7 @@ bool Session::chopResult(side chopSide) {
 
 		spikeSide = neck->getCurrSpikeSide();
 		if (spikeSide == heroPosition) {
+			drawer->drawTimer(timer->getTicks());
 			drawer->drawNeck(neck->getSpikeSeq());
 			drawer->drawScores(iScores);
 			drawer->drawGrave(spikeSide, heroPosition);
@@ -38,6 +43,11 @@ bool Session::chopResult(side chopSide) {
 			return false;
 		}
 		else {
+			drawer->drawTimer(timer->getTicks());
+			drawer->drawNeck(neck->getSpikeSeq());
+			drawer->drawScores(iScores);
+			drawer->drawHero(heroPosition);
+			drawer->updateScreen();
 			return true;
 		}
 
@@ -58,15 +68,7 @@ void Session::run() {
 //		std::cout << "[Session.run]: in if";
 		
 		while (!bGameOver) {
-			iKeyCode = timer->runTick(Timer::MIN_TICK_LENGTH);
-			if (iKeyCode == 0 && timer->getTickLength() >= Timer::MIN_TICK_LENGTH) {
-				drawer->drawNeck(neck->getSpikeSeq());
-				drawer->drawScores(iScores);
-				drawer->drawHero(heroPosition);
-				drawer->updateScreen();
-
-				iKeyCode = timer->runTick(timer->getTickLength() - Timer::MIN_TICK_LENGTH);
-			}
+			iKeyCode = timer->runTick(timer->getTickLength());
 			switch (iKeyCode) {
 			case 0: //ничего не нажато, "тик" прошел
 				if (timer->getTicks() == 0) {
@@ -75,6 +77,9 @@ void Session::run() {
 				else {
 					timer->substrTick();
 					drawer->drawTimer(timer->getTicks());
+					drawer->drawNeck(neck->getSpikeSeq());
+					drawer->drawScores(iScores);
+					drawer->drawHero(heroPosition);
 					drawer->updateScreen();
 				}
 				break;
@@ -92,6 +97,10 @@ void Session::run() {
 				break;
 			}
 		}
+		drawer->drawTimer(timer->getTicks());
+		drawer->drawNeck(neck->getSpikeSeq());
+		drawer->drawScores(iScores);
+		drawer->drawGrave(neck->getCurrSpikeSide(), heroPosition);
 		drawer->drawGameOver(iScores);
 		drawer->updateScreen();
 	}
