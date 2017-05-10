@@ -1,5 +1,7 @@
 ﻿#include <fstream>
+#include <stdio.h>
 #include "headers.h"
+
 const double Drawer::UPDATE_SCREEN_DELAY = 60;
 
 HANDLE Drawer::hStdout;
@@ -30,7 +32,9 @@ CHAR_INFO Drawer::chiTimeStringEmpty[22];		//22
 using namespace std;
 
 void Drawer::initDrawerPlatform() {
-	system("MODE CON: COLS=87 LINES=36");//!!!!!!!!!!!!!!!1добавить параметризацию через ширину и высоту консоли
+	char modConCommand[30];
+	snprintf(modConCommand, 30, "MODE CON: COLS=%d LINES=%d", CONSOLE_WIDTH, CONSOLE_HEIGHT+1);
+	system(modConCommand);
 
 	//Чтение тайлов
 	ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);

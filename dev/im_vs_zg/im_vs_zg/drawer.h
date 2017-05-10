@@ -16,8 +16,8 @@ public:
 	void drawScores(int scores);
 	void updateScreen();
 private:
-	static const int CONSOLE_WIDTH = 87; //Важно! При переопределении изменить размер консоли в Drawer::initDrawerPlatform
-	static const int CONSOLE_HEIGHT = 35;
+	static const int CONSOLE_WIDTH = 87; // <=999
+	static const int CONSOLE_HEIGHT = 35;// <=999
 
 	//Для двойной буферизации
 	PHANDLE phVisibleBuffer;
