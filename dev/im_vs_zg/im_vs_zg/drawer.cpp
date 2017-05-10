@@ -139,6 +139,12 @@ void Drawer::initDrawerPlatform() {
 	}
 }
 
+void Drawer::updateConsoleTitle(int iHighScore) {
+	wchar_t wcConsoleTitle[50];
+	swprintf(wcConsoleTitle, L"Ilya Muromets VS Zmey Gorynych. Highscore: %d", iHighScore);
+	SetConsoleTitle(wcConsoleTitle);
+}
+
 Drawer::Drawer() {
 	phInvisibleBuffer = &hStdout;
 	drawFrame();

@@ -53,7 +53,7 @@ bool Session::chopResult(side chopSide) {
 	}
 }
 
-void Session::run() {
+int Session::run() {
 	drawer->drawTimer(timer->getTicks());
 	drawer->drawNeck(neck->getSpikeSeq());
 	drawer->drawScores(iScores);
@@ -109,4 +109,5 @@ void Session::run() {
 	drawer->drawGrave(neck->getCurrSpikeSide(), heroPosition);
 	drawer->drawGameOver(iScores);
 	drawer->updateScreen();
+	return iScores;
 }

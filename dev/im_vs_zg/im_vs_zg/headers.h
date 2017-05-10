@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include <iostream>
-#include <ctime>
+#include <time.h>
 #include <conio.h>
 #include <windows.h>
-#include <cstring>
+#include <string.h>
 #include "timer.h"
 #include "neck.h"
 #include "session.h"

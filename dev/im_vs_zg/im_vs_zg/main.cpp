@@ -34,23 +34,31 @@ void checkDrawer() {
 	drawer.updateScreen();
 }
 
+
 int main() {
-//	checkNeck();
-//	checkDrawer();
+	int iHighScores = 0;
+	int iCurrScores;
+
+	Drawer::updateConsoleTitle(iHighScores);
 	Drawer::initDrawerPlatform();
 
-
 	Session *session = new Session();
-	session->run();
+	iCurrScores = session->run();
+	iHighScores = iCurrScores;
 
-	int key = 1;
-	while (key != ESCAPE_KEYCODE) {
-		if (key == SPACEBAR_KEYCODE) {
+	int iKeyCode = 1;
+	while (iKeyCode != ESCAPE_KEYCODE) {
+		if (iKeyCode == SPACEBAR_KEYCODE) {
 			session->~Session();
+			Drawer::updateConsoleTitle(iHighScores);
 			session = new Session();
-			session->run();
+			iCurrScores = session->run();
+			if (iCurrScores > iHighScores) {
+				iHighScores = iCurrScores;
+			}
 		}
-		key = ((key = _getch()) == 224) ? getch() : key;
+		iKeyCode = ((iKeyCode = _getch()) == 224) ? getch() : iKeyCode;
 	}
 
+	return 0;
 }

@@ -4,6 +4,8 @@
 class Drawer {
 public:
 	static void initDrawerPlatform();
+	static void updateConsoleTitle(int iHightScores);
+
 	Drawer();
 	~Drawer();
 	void drawFrame();

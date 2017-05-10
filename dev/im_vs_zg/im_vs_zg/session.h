@@ -11,5 +11,5 @@ class Session {
 public:
 	Session();
 	bool chopResult(side chopSide); //возвращает true если успешно, иначе false
-	void run();
+	int run(); //Вернет количество набранных очков
 };
