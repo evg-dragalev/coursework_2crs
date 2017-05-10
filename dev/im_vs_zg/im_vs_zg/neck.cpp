@@ -1,4 +1,4 @@
-#include "headers.h"
+ï»¿#include "headers.h"
 const int Neck::NECK_SEGM_AMOUNT = 5;
 const int Neck::VISIBLE_NECK_SEGM_AMOUNT = 4;
 
@@ -36,9 +36,9 @@ Neck::Neck() {
 
 	NeckSegment* pointer = front;
 	for (int i = 0; i < NECK_SEGM_AMOUNT; i++) {
-		pointer->next = new NeckSegment();			//âûäåëåíèå ïàìÿòè
-		pointer->next->bIsEven = !pointer->bIsEven; //èíèöèàëèçàöèÿ ñåãìåíòà
-		setSegmentFrame(pointer->next);			//èíèöèàëèçàöèÿ ñåãìåíòà
+		pointer->next = new NeckSegment();			//Ð²Ñ‹Ð´ÐµÐ»ÐµÐ½Ð¸Ðµ Ð¿Ð°Ð¼ÑÑ‚Ð¸
+		pointer->next->bIsEven = !pointer->bIsEven; //Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÑÐµÐ³Ð¼ÐµÐ½Ñ‚Ð°
+		setSegmentFrame(pointer->next);			//Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÑÐµÐ³Ð¼ÐµÐ½Ñ‚Ð°
 
 		pointer = pointer->next; 
 	}

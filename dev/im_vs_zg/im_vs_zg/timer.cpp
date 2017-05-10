@@ -1,4 +1,4 @@
-#include "headers.h"
+﻿#include "headers.h"
 
 const int Timer::MAX_TICKS_AMOUNT = 22;
 const double Timer::START_TICKS_LENGTH = 0.6;
@@ -27,7 +27,7 @@ int Timer::runTick(double dTick) {
 	while (clock() < endTickTime) {
 		if (_kbhit()) {
 			keyCode = ((keyCode = _getch()) == 224) ? getch() : keyCode;
-			if (keyCode == 27 || keyCode == 77 || keyCode == 75) break;
+			if (keyCode == ESCAPE_KEYCODE || keyCode == RIGHTARROW_KEYCODE || keyCode == LEFTARROW_KEYCODE) break;
 			keyCode = 0;
 		}
 	}

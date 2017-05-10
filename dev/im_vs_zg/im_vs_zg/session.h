@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "headers.h"
 #include "drawer.h"
 
@@ -10,7 +10,6 @@ class Session {
 	int iScores;
 public:
 	Session();
-	bool chopResult(side chopSide); //возвращает true если успешно, иначе false
+	bool chopResult(side chopSide); //РІРѕР·РІСЂР°С‰Р°РµС‚ true РµСЃР»Рё СѓСЃРїРµС€РЅРѕ, РёРЅР°С‡Рµ false
 	void run();
-	void restart();
 };

@@ -1,4 +1,4 @@
-#include "headers.h"
+﻿#include "headers.h"
 
 
 void displayNeck(Neck neck) {
@@ -20,14 +20,6 @@ void checkNeck() {
 	}
 }
 
-void checkGameOver(int scores) {
-	Drawer drawer;
-	side neck[4] = { LEFT, NONE, RIGHT, NONE };
-//	drawer.drawScene(neck, LEFT, 16, 200);
-	drawer.drawGameOver(scores);
-	drawer.updateScreen();
-}
-
 void checkDrawer() {
 	Drawer drawer;
 
@@ -44,7 +36,6 @@ void checkDrawer() {
 
 int main() {
 //	checkNeck();
-//	checkGameOver(200);
 //	checkDrawer();
 	Drawer::initDrawerPlatform();
 
@@ -53,8 +44,8 @@ int main() {
 	session->run();
 
 	int key = 1;
-	while (key != 27) {
-		if (key == 32) {
+	while (key != ESCAPE_KEYCODE) {
+		if (key == SPACEBAR_KEYCODE) {
 			session->~Session();
 			session = new Session();
 			session->run();

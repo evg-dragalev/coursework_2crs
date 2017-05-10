@@ -1,4 +1,4 @@
-#include "headers.h"
+ï»¿#include "headers.h"
 
 Session::Session() {
 	drawer = new Drawer;
@@ -50,7 +50,6 @@ bool Session::chopResult(side chopSide) {
 			drawer->updateScreen();
 			return true;
 		}
-
 	}
 }
 
@@ -60,48 +59,54 @@ void Session::run() {
 	drawer->drawScores(iScores);
 	drawer->drawHero(heroPosition);
 	drawer->updateScreen();
-//	std::cout << "[Session.run]: screen updated";
+
 	int iKeyCode;
 	bool bGameOver = false;
 
-	if ( getch() ) {
-//		std::cout << "[Session.run]: in if";
-		
-		while (!bGameOver) {
-			iKeyCode = timer->runTick(timer->getTickLength());
-			switch (iKeyCode) {
-			case 0: //íè÷åãî íå íàæàòî, "òèê" ïğîøåë
-				if (timer->getTicks() == 0) {
-					bGameOver = true;
-				} 
-				else {
-					timer->substrTick();
-					drawer->drawTimer(timer->getTicks());
-					drawer->drawNeck(neck->getSpikeSeq());
-					drawer->drawScores(iScores);
-					drawer->drawHero(heroPosition);
-					drawer->updateScreen();
-				}
-				break;
-			case 27: //esc
-				bGameOver = true;
-				break;
-			case 77: //ñòğåëêà âïğàâî
-				bGameOver = !chopResult(RIGHT);
-				break;
-			case 75: //ñòğåëêà âëåâî
-				bGameOver = !chopResult(LEFT);
-				break;
-			default:
-				throw "error";
-				break;
-			}
+	//ĞŸĞµÑ€Ğ²Ğ¾Ğµ Ğ½Ğ°Ğ¶Ğ°Ñ‚Ğ¸Ğµ
+	while (true) {
+		if (_kbhit()) {
+			iKeyCode = ((iKeyCode = _getch()) == 224) ? getch() : iKeyCode;
+			if (iKeyCode == ESCAPE_KEYCODE || iKeyCode == RIGHTARROW_KEYCODE || iKeyCode == LEFTARROW_KEYCODE) break;
+			iKeyCode = 0;
 		}
-		drawer->drawTimer(timer->getTicks());
-		drawer->drawNeck(neck->getSpikeSeq());
-		drawer->drawScores(iScores);
-		drawer->drawGrave(neck->getCurrSpikeSide(), heroPosition);
-		drawer->drawGameOver(iScores);
-		drawer->updateScreen();
 	}
+		
+	while (!bGameOver) {
+		switch (iKeyCode) {
+		case 0: //Ğ½Ğ¸Ñ‡ĞµĞ³Ğ¾ Ğ½Ğµ Ğ½Ğ°Ğ¶Ğ°Ñ‚Ğ¾, "Ñ‚Ğ¸Ğº" Ğ¿Ñ€Ğ¾ÑˆĞµĞ»
+			if (timer->getTicks() == 0) {
+				bGameOver = true;
+			} 
+			else {
+				timer->substrTick();
+				drawer->drawTimer(timer->getTicks());
+				drawer->drawNeck(neck->getSpikeSeq());
+				drawer->drawScores(iScores);
+				drawer->drawHero(heroPosition);
+				drawer->updateScreen();
+			}
+			break;
+		case ESCAPE_KEYCODE: //esc
+			bGameOver = true;
+			break;
+		case RIGHTARROW_KEYCODE: //ÑÑ‚Ñ€ĞµĞ»ĞºĞ° Ğ²Ğ¿Ñ€Ğ°Ğ²Ğ¾
+			bGameOver = !chopResult(RIGHT);
+			break;
+		case LEFTARROW_KEYCODE: //ÑÑ‚Ñ€ĞµĞ»ĞºĞ° Ğ²Ğ»ĞµĞ²Ğ¾
+			bGameOver = !chopResult(LEFT);
+			break;
+		default:
+			throw "error";
+			break;
+		}
+		if (!bGameOver) iKeyCode = timer->runTick(timer->getTickLength());
+	}
+
+	drawer->drawTimer(timer->getTicks());
+	drawer->drawNeck(neck->getSpikeSeq());
+	drawer->drawScores(iScores);
+	drawer->drawGrave(neck->getCurrSpikeSide(), heroPosition);
+	drawer->drawGameOver(iScores);
+	drawer->updateScreen();
 }

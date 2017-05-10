@@ -1,13 +1,6 @@
-#include <fstream>
+п»ї#include <fstream>
 #include "headers.h"
-const bool Drawer::DEBUG_OUT_ON = true;
 const double Drawer::UPDATE_SCREEN_DELAY = 60;
-
-COORD Drawer::coordDebugBufSize;
-COORD Drawer::coordDebugBufDest;
-COORD Drawer::coordDebugBufCoord;
-SMALL_RECT Drawer::srctDebugReadWriteRect;
-CHAR_INFO Drawer::chiReadedDebugMessage[CONSOLE_WIDTH];
 
 HANDLE Drawer::hStdout;
 HANDLE Drawer::hNewScreenBuffer;
@@ -17,7 +10,7 @@ CHAR_INFO Drawer::chiCrashFromLeftSpike[147];	//7*21
 CHAR_INFO Drawer::chiCrashFromRight[133];		//7*19
 CHAR_INFO Drawer::chiCrashFromRightSpike[147];	//7*21
 CHAR_INFO Drawer::chiDigitsArr[10][6];			//2*3
-CHAR_INFO Drawer::chiFrame[2958];				//34*87
+CHAR_INFO Drawer::chiFrame[2924];				//34*86
 CHAR_INFO Drawer::chiGameOver[1121];			//19*59
 CHAR_INFO Drawer::chiHeroAtcBottom[15];			//15
 CHAR_INFO Drawer::chiHeroAtcHead[5];			//5
@@ -37,9 +30,9 @@ CHAR_INFO Drawer::chiTimeStringEmpty[22];		//22
 using namespace std;
 
 void Drawer::initDrawerPlatform() {
-	system("MODE CON: COLS=87 LINES=36");//!!!!!!!!!!!!!!!1добавить параметризацию через ширину и высоту консоли
+	system("MODE CON: COLS=87 LINES=36");//!!!!!!!!!!!!!!!1РґРѕР±Р°РІРёС‚СЊ РїР°СЂР°РјРµС‚СЂРёР·Р°С†РёСЋ С‡РµСЂРµР· С€РёСЂРёРЅСѓ Рё РІС‹СЃРѕС‚Сѓ РєРѕРЅСЃРѕР»Рё
 
-	//Чтение тайлов
+	//Р§С‚РµРЅРёРµ С‚Р°Р№Р»РѕРІ
 	ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);
 	fin.read((char*)chiCrashFromLeft, sizeof(chiCrashFromLeft));
 	fin.close();
@@ -125,65 +118,21 @@ void Drawer::initDrawerPlatform() {
 	fin.close();
 
 
-	//Для дебага и ошибок
-	coordDebugBufSize.X = CONSOLE_WIDTH;
-	coordDebugBufSize.Y = 1;
-
-	coordDebugBufDest.X = 0;
-	coordDebugBufDest.Y = CONSOLE_HEIGHT;
-
-	coordDebugBufCoord.X = 0;
-	coordDebugBufCoord.Y = 0;
-
-	srctDebugReadWriteRect.Top = CONSOLE_HEIGHT;
-	srctDebugReadWriteRect.Left = 0;
-	srctDebugReadWriteRect.Bottom = CONSOLE_HEIGHT;
-	srctDebugReadWriteRect.Right = CONSOLE_WIDTH - 1;
-
-	//Определения буферов двойной буферизации
+	//РћРїСЂРµРґРµР»РµРЅРёСЏ Р±СѓС„РµСЂРѕРІ РґРІРѕР№РЅРѕР№ Р±СѓС„РµСЂРёР·Р°С†РёРё
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	hNewScreenBuffer = CreateConsoleScreenBuffer(
-		GENERIC_READ |           	// доступ к чтению/записи
+		GENERIC_READ |           	// РґРѕСЃС‚СѓРї Рє С‡С‚РµРЅРёСЋ/Р·Р°РїРёСЃРё
 		GENERIC_WRITE,
-		0,                       	// совместно не используется
-		NULL,                    	// атрибутов защиты нет
-		CONSOLE_TEXTMODE_BUFFER,    // должен быть TEXTMODE
-		NULL);                   	// зарезервирован, должен быть NULL
+		0,                       	// СЃРѕРІРјРµСЃС‚РЅРѕ РЅРµ РёСЃРїРѕР»СЊР·СѓРµС‚СЃСЏ
+		NULL,                    	// Р°С‚СЂРёР±СѓС‚РѕРІ Р·Р°С‰РёС‚С‹ РЅРµС‚
+		CONSOLE_TEXTMODE_BUFFER,    // РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ TEXTMODE
+		NULL);                   	// Р·Р°СЂРµР·РµСЂРІРёСЂРѕРІР°РЅ, РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ NULL
 	if (hStdout == INVALID_HANDLE_VALUE ||
 		hNewScreenBuffer == INVALID_HANDLE_VALUE){
-		debugOut("CreateConsoleScreenBuffer"); // 
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+		cout << "[Drawer::initDrawerPlatform()]: CreateConsoleScreenBuffer Err";
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
 	}
-}
-
-
-void Drawer::debugOut(char cDebugMessage[]) {
-	BOOL fSuccess;
-
-	SetConsoleCursorPosition(hStdout, coordDebugBufDest);
-	cout << cDebugMessage;
-
-	//Копирование сообщения в доп. буфер
-	fSuccess = ReadConsoleOutput(
-		hStdout,
-		chiReadedDebugMessage,
-		coordDebugBufSize,
-		coordDebugBufCoord,
-		&srctDebugReadWriteRect
-	);
-	if (!fSuccess) {
-		cout << " + debugOut rbErr";
-	}
-	fSuccess = WriteConsoleOutput(
-		hNewScreenBuffer,
-		chiReadedDebugMessage,
-		coordDebugBufSize,
-		coordDebugBufCoord,
-		&srctDebugReadWriteRect
-	);
-	if (!fSuccess) {
-		cout << " + debugOut wbErr";
-	}
-
 }
 
 Drawer::Drawer() {
@@ -191,16 +140,16 @@ Drawer::Drawer() {
 	drawFrame();
 	phInvisibleBuffer = &hNewScreenBuffer;
 	drawFrame();
-	SetConsoleActiveScreenBuffer(hStdout);
-	phVisibleBuffer = &hStdout;
-}
 
+	phVisibleBuffer = &hStdout;
+	SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+}
 
 void Drawer::drawFrame() {
 	COORD coordBufSize;
 	COORD coordDestPoint;
 
-	coordBufSize.X = 87;
+	coordBufSize.X = 86;
 	coordBufSize.Y = 34;
 
 	coordDestPoint.X = 0;
@@ -368,23 +317,6 @@ void Drawer::drawGameOver(int scores) {
 	//			  .Y = 23
 	writeToConsole(coordDestPoint, coordBufSize, chiDigitsArr[scores % 10]);
 }
-/*
-void Drawer::drawScene(side* neckSpikesSeq, side heroPosition, int timerTicks, int scores) {
-	drawTimer(timerTicks);
-
-	drawNeck(neckSpikesSeq);
-
-	if (heroPosition != neckSpikesSeq[3]) {
-		drawHero(heroPosition);
-	}
-	if (heroPosition == neckSpikesSeq[3]) {
-		drawGrave(neckSpikesSeq[3], heroPosition);
-	}
-
-	drawScores(1);
-
-}
-*/
 
 void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 	COORD coordBufSize;
@@ -412,13 +344,7 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 		coordDestPoint.X = 16;
 		coordDestPoint.Y = 32;
 		writeToConsole(coordDestPoint, coordBufSize, chiHeroAtcBottom);
-/*
-		strncpy(outString + 23 * 87 + 16, heroLeftAtc[0], 12);
-		for (int i = 1; i < 9; i++) {
-			strncpy(outString + (i + 23) * 87 + 16, heroLeftAtc[i], 28);
-		}
-		strncpy(outString + 32 * 87 + 16, heroLeftAtc[9], 15);
-*/
+
 		if (neckCurrSeg == RIGHT) {
 			coordBufSize.X = 21;
 			coordBufSize.Y = 7;
@@ -426,10 +352,6 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 			coordDestPoint.X = 44;
 			coordDestPoint.Y = 25;
 			writeToConsole(coordDestPoint, coordBufSize, chiCrashFromLeftSpike);
-
-//			for (int i = 0; i < 7; i++) {
-//				strncpy(outString + (i + 25) * 87 + 44, CrashFromLeftSpike[i], 21);
-//			}
 		}
 		else {
 			coordBufSize.X = 19;
@@ -438,9 +360,6 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 			coordDestPoint.X = 44;
 			coordDestPoint.Y = 25;
 			writeToConsole(coordDestPoint, coordBufSize, chiCrashFromLeft);
-//			for (int i = 0; i < 7; i++) {
-//				strncpy(outString + (i + 25) * 87 + 44, CrashFromLeft[i], 19);
-//			}
 		}
 	}
 
@@ -465,13 +384,7 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 		coordDestPoint.X = 52;
 		coordDestPoint.Y = 32;
 		writeToConsole(coordDestPoint, coordBufSize, chiHeroAtcBottom);
-/*
-		strncpy(outString + 23 * 87 + 56, heroRightAtc[0], 8);
-		for (int i = 1; i < 9; i++) {
-			strncpy(outString + (i + 23) * 87 + 40, heroRightAtc[i], 28);
-		}
-		strncpy(outString + 32 * 87 + 52, heroRightAtc[9], 15);
-*/
+
 		if (neckCurrSeg == LEFT) {
 			coordBufSize.X = 21;
 			coordBufSize.Y = 7;
@@ -479,10 +392,6 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 			coordDestPoint.X = 19;
 			coordDestPoint.Y = 25;
 			writeToConsole(coordDestPoint, coordBufSize, chiCrashFromRightSpike);
-
-//			for (int i = 0; i < 7; i++) {
-//				strncpy(outString + (i + 25) * 87 + 19, CrashFromRightSpike[i], 21);
-//			}
 		}
 		else {
 			coordBufSize.X = 19;
@@ -491,10 +400,6 @@ void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 			coordDestPoint.X = 21;
 			coordDestPoint.Y = 25;
 			writeToConsole(coordDestPoint, coordBufSize, chiCrashFromRight);
-
-//			for (int i = 0; i < 7; i++) {
-//				strncpy(outString + (i + 25) * 87 + 21, CrashFromRight[i], 19);
-//			}
 		}
 	 }
 }
@@ -507,11 +412,17 @@ void Drawer::updateScreen() {
 	phInvisibleBuffer = phBuf;
 
 	Sleep(UPDATE_SCREEN_DELAY);
-	if (!SetConsoleActiveScreenBuffer(*phVisibleBuffer))
-		cout << "SetConsoleActiveScreenBuffer";
+	if (!SetConsoleActiveScreenBuffer(*phVisibleBuffer)) {
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+		cout << "[Drawer::updateScreen()]:SetConsoleActiveScreenBuffer Err";
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+	}
 }
 
 Drawer::~Drawer() {
-	if (!SetConsoleActiveScreenBuffer(hStdout))
-	cout << "SetConsoleActiveScreenBuffer";
+	if (!SetConsoleActiveScreenBuffer(hStdout)) {
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+		cout << "[Drawer::~Drawer()]:SetConsoleActiveScreenBuffer Err";
+		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+	}
 }
