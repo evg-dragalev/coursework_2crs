@@ -1,8 +1,9 @@
 ﻿#include "headers.h"
 
 const int Timer::MAX_TICKS_AMOUNT = 22;
-const double Timer::START_TICKS_LENGTH = 0.6;
 const double Timer::MIN_TICK_LENGTH = 0.002;
+const double Timer::START_TICKS_LENGTH = 1.4;
+const double Timer::DECREASE_COEF = 0.43;
 
 Timer::Timer() {
 	piTicks = new int(MAX_TICKS_AMOUNT/2);
@@ -10,7 +11,7 @@ Timer::Timer() {
 }
 
 void Timer::decreaseTickLength() {
-	*pdTickLength -= (*pdTickLength < MIN_TICK_LENGTH) ? 0 : ((*pdTickLength) / START_TICKS_LENGTH )/10;
+	*pdTickLength = (*pdTickLength < MIN_TICK_LENGTH) ? *pdTickLength : (*pdTickLength * DECREASE_COEF);
 }
 
 void Timer::addTick() {

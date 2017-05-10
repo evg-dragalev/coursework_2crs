@@ -23,7 +23,7 @@ bool Session::chopResult(side chopSide) {
 		iScores++;
 		timer->addTick();
 
-		if (iScores % 5 == 0) {
+		if (checkDecreaseTickScorePoint()) {
 			timer->decreaseTickLength();
 		}
 		drawer->drawTimer(timer->getTicks());
