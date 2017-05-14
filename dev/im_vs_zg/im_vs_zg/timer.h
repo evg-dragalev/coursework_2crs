@@ -4,11 +4,13 @@
 class Timer {
 	int* piTicks;
 	double* pdTickLength;
+	static int MAX_TICKS_AMOUNT;
+	static double START_TICKS_LENGTH;
+	static double MIN_TICK_LENGTH;
+	static double DECREASE_COEF;
 public:
-	static const int MAX_TICKS_AMOUNT;
-	static const double START_TICKS_LENGTH;
-	static const double MIN_TICK_LENGTH;
-	static const double DECREASE_COEF;
+	static void init(int maxTicksAmount, double startTicksLength, double minTickLength, double decreaseCoef);
+
 	Timer();
 	void decreaseTickLength();
 	void addTick();

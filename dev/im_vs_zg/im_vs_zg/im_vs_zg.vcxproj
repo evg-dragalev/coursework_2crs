@@ -155,6 +155,9 @@
     <ClInclude Include="session.h" />
     <ClInclude Include="timer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="settings.cfg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

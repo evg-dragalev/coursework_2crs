@@ -3,7 +3,7 @@
 
 class Drawer {
 public:
-	static void initDrawerPlatform();
+	static void initDrawerPlatform(double updateScreenDelay);
 	static void updateConsoleTitle(int iHightScores);
 
 	Drawer();
@@ -17,6 +17,7 @@ public:
 	void drawChop(side neckCurrSeg, side heroPosition);
 	void drawScores(int scores);
 	void updateScreen();
+
 private:
 	static const int CONSOLE_WIDTH = 87; // <=999
 	static const int CONSOLE_HEIGHT = 35;// <=999
@@ -26,7 +27,7 @@ private:
 	PHANDLE phInvisibleBuffer;
 	static HANDLE hStdout;
 	static HANDLE hNewScreenBuffer;
-	static const double UPDATE_SCREEN_DELAY;
+	static double UPDATE_SCREEN_DELAY;
 
 	//Тайлы
 	static CHAR_INFO chiCrashFromLeft[133];			//7*19
@@ -52,7 +53,6 @@ private:
 	static CHAR_INFO chiTimeStringEmpty[22];		//22
 
 	void writeToConsole(COORD coordDestPoint, COORD coordBufSize, CHAR_INFO chiTile[]) { //inline для быстродействия
-		bool fSuccess;
 		SMALL_RECT srctOutRect;
 		COORD coordBufCoord;
 
@@ -64,18 +64,14 @@ private:
 		coordBufCoord.X = 0;
 		coordBufCoord.Y = 0;
 
-		fSuccess = WriteConsoleOutput(
+		if (!WriteConsoleOutput(
 			*phInvisibleBuffer,
 			chiTile,
 			coordBufSize,
 			coordBufCoord,
-			&srctOutRect
-		);
-
-		if (!fSuccess) {
+			&srctOutRect)) {
 			SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
-			std::cout << "[Drawer::writeToConsole()]:WriteConsoleOutput Err";
-			SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+			std::cout << "[Drawer::writeToConsole()]:WriteConsoleOutput Err Code" << GetLastError();
 		}
 	}
 };

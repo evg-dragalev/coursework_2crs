@@ -3,16 +3,27 @@
 #include "drawer.h"
 
 class Session {
+public:
+	static const int DECREASE_POINTS_AMOUNT = 7;
+
+	static void init(int dp[DECREASE_POINTS_AMOUNT]);
+	Session();
+	//Вернет количество набранных очков
+	int run();
+	bool chopResult(side chopSide);
+	bool checkDecreaseTickScorePoint() {
+		for (int i = 0; i < DECREASE_POINTS_AMOUNT; i++) {
+			if (DECREASE_POINT[i] == iScores) return true;
+		}
+		return false;
+	};
+
+private:
+	static int DECREASE_POINT[DECREASE_POINTS_AMOUNT];
+
 	Drawer* drawer;
 	Neck* neck;
 	Timer* timer;
 	side heroPosition; 
 	int iScores;
-public:
-	Session();
-	bool checkDecreaseTickScorePoint() {
-		return 0 == (10 - iScores)*(32 - iScores)*(62 - iScores)*(102 - iScores)*(204 - iScores)*(350 - iScores)*(650 - iScores);
-	};
-	bool chopResult(side chopSide); //возвращает true если успешно, иначе false
-	int run(); //Вернет количество набранных очков
 };

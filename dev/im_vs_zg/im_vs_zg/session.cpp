@@ -1,5 +1,14 @@
 ﻿#include "headers.h"
 
+
+int Session::DECREASE_POINT[DECREASE_POINTS_AMOUNT] = { 10, 32, 64, 102, 204, 350, 650 };
+
+void Session::init(int dp[DECREASE_POINTS_AMOUNT]) {
+	for (int i = 0; i < 7; i++) {
+		DECREASE_POINT[i] = (dp[i]>0) ? dp[i]%1000 : DECREASE_POINT[i];
+	}
+}
+
 Session::Session() {
 	drawer = new Drawer;
 	neck = new Neck;

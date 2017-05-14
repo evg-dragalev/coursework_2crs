@@ -1,9 +1,16 @@
 ﻿#include "headers.h"
 
-const int Timer::MAX_TICKS_AMOUNT = 22;
-const double Timer::MIN_TICK_LENGTH = 0.002;
-const double Timer::START_TICKS_LENGTH = 1.4;
-const double Timer::DECREASE_COEF = 0.43;
+int Timer::MAX_TICKS_AMOUNT = 22;
+double Timer::MIN_TICK_LENGTH = 0.002;
+double Timer::START_TICKS_LENGTH = 1.4;
+double Timer::DECREASE_COEF = 0.43;
+
+void Timer::init(int maxTicksAmount, double startTicksLength, double minTickLength, double decreaseCoef) {
+	MAX_TICKS_AMOUNT = (maxTicksAmount >= 2 && maxTicksAmount <= MAX_TICKS_AMOUNT) ? maxTicksAmount : MAX_TICKS_AMOUNT;
+	MIN_TICK_LENGTH = (minTickLength > 0) ? minTickLength : MIN_TICK_LENGTH;
+	START_TICKS_LENGTH = (startTicksLength > 0) ? startTicksLength : START_TICKS_LENGTH;
+	DECREASE_COEF = (decreaseCoef > 0) ? decreaseCoef : DECREASE_COEF;
+}
 
 Timer::Timer() {
 	piTicks = new int(MAX_TICKS_AMOUNT/2);

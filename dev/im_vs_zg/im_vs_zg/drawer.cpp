@@ -1,8 +1,7 @@
-﻿#include <fstream>
-#include <stdio.h>
+﻿#include <stdio.h>
 #include "headers.h"
 
-const double Drawer::UPDATE_SCREEN_DELAY = 60;
+double Drawer::UPDATE_SCREEN_DELAY = 60;
 
 HANDLE Drawer::hStdout;
 HANDLE Drawer::hNewScreenBuffer;
@@ -31,98 +30,108 @@ CHAR_INFO Drawer::chiTimeStringEmpty[22];		//22
 
 using namespace std;
 
-void Drawer::initDrawerPlatform() {
+void Drawer::initDrawerPlatform(double updateScreenDelay) {
+	UPDATE_SCREEN_DELAY = (updateScreenDelay > 0) ? updateScreenDelay : UPDATE_SCREEN_DELAY;
+
 	char modConCommand[30];
 	snprintf(modConCommand, 30, "MODE CON: COLS=%d LINES=%d", CONSOLE_WIDTH, CONSOLE_HEIGHT+1);
 	system(modConCommand);
 
 	//Чтение тайлов
-	ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);
-	fin.read((char*)chiCrashFromLeft, sizeof(chiCrashFromLeft));
-	fin.close();
+	try {
+		ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);
+		fin.read((char*)chiCrashFromLeft, sizeof(chiCrashFromLeft));
+		fin.close();
 
-	fin.open("win_bins/crashFromLeftSpike.bin", ios::in | ios::binary);
-	fin.read((char*)chiCrashFromLeftSpike, sizeof(chiCrashFromLeftSpike));
-	fin.close();
+		fin.open("win_bins/crashFromLeftSpike.bin", ios::in | ios::binary);
+		fin.read((char*)chiCrashFromLeftSpike, sizeof(chiCrashFromLeftSpike));
+		fin.close();
 
-	fin.open("win_bins/crashFromRight.bin", ios::in | ios::binary);
-	fin.read((char*)chiCrashFromRight, sizeof(chiCrashFromRight));
-	fin.close();
+		fin.open("win_bins/crashFromRight.bin", ios::in | ios::binary);
+		fin.read((char*)chiCrashFromRight, sizeof(chiCrashFromRight));
+		fin.close();
 
-	fin.open("win_bins/crashFromRightSpike.bin", ios::in | ios::binary);
-	fin.read((char*)chiCrashFromRightSpike, sizeof(chiCrashFromRightSpike));
-	fin.close();
+		fin.open("win_bins/crashFromRightSpike.bin", ios::in | ios::binary);
+		fin.read((char*)chiCrashFromRightSpike, sizeof(chiCrashFromRightSpike));
+		fin.close();
 
-	fin.open("win_bins/digitsArr.bin", ios::in | ios::binary);
-	fin.read((char*)chiDigitsArr, sizeof(chiDigitsArr));
-	fin.close();
+		fin.open("win_bins/digitsArr.bin", ios::in | ios::binary);
+		fin.read((char*)chiDigitsArr, sizeof(chiDigitsArr));
+		fin.close();
 
-	fin.open("win_bins/frame.bin", ios::in | ios::binary);
-	fin.read((char*)chiFrame, sizeof(chiFrame));
-	fin.close();
+		fin.open("win_bins/frame.bin", ios::in | ios::binary);
+		fin.read((char*)chiFrame, sizeof(chiFrame));
+		fin.close();
 
-	fin.open("win_bins/gameOver.bin", ios::in | ios::binary);
-	fin.read((char*)chiGameOver, sizeof(chiGameOver));
-	fin.close();
+		fin.open("win_bins/gameOver.bin", ios::in | ios::binary);
+		fin.read((char*)chiGameOver, sizeof(chiGameOver));
+		fin.close();
 
-	fin.open("win_bins/heroAtcBottom.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroAtcBottom, sizeof(chiHeroAtcBottom));
-	fin.close();
+		fin.open("win_bins/heroAtcBottom.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroAtcBottom, sizeof(chiHeroAtcBottom));
+		fin.close();
 
-	fin.open("win_bins/heroAtcHead.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroAtcHead, sizeof(chiHeroAtcHead));
-	fin.close();
+		fin.open("win_bins/heroAtcHead.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroAtcHead, sizeof(chiHeroAtcHead));
+		fin.close();
 
-	fin.open("win_bins/heroDead.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroDead, sizeof(chiHeroDead));
-	fin.close();
+		fin.open("win_bins/heroDead.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroDead, sizeof(chiHeroDead));
+		fin.close();
 
-	fin.open("win_bins/heroDeadL.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroDeadL, sizeof(chiHeroDeadL));
-	fin.close();
+		fin.open("win_bins/heroDeadL.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroDeadL, sizeof(chiHeroDeadL));
+		fin.close();
 
-	fin.open("win_bins/heroDeadR.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroDeadR, sizeof(chiHeroDeadR));
-	fin.close();
+		fin.open("win_bins/heroDeadR.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroDeadR, sizeof(chiHeroDeadR));
+		fin.close();
 
-	fin.open("win_bins/heroLeft.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroLeft, sizeof(chiHeroLeft));
-	fin.close();
+		fin.open("win_bins/heroLeft.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroLeft, sizeof(chiHeroLeft));
+		fin.close();
 
-	fin.open("win_bins/heroLeftAtc.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroLeftAtc, sizeof(chiHeroLeftAtc));
-	fin.close();
+		fin.open("win_bins/heroLeftAtc.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroLeftAtc, sizeof(chiHeroLeftAtc));
+		fin.close();
 
-	fin.open("win_bins/heroRight.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroRight, sizeof(chiHeroRight));
-	fin.close();
+		fin.open("win_bins/heroRight.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroRight, sizeof(chiHeroRight));
+		fin.close();
 
-	fin.open("win_bins/heroRightAtc.bin", ios::in | ios::binary);
-	fin.read((char*)chiHeroRightAtc, sizeof(chiHeroRightAtc));
-	fin.close();
+		fin.open("win_bins/heroRightAtc.bin", ios::in | ios::binary);
+		fin.read((char*)chiHeroRightAtc, sizeof(chiHeroRightAtc));
+		fin.close();
 
-	fin.open("win_bins/neckFrames.bin", ios::in | ios::binary);
-	fin.read((char*)chiNeckFrames, sizeof(chiNeckFrames));
-	fin.close();
+		fin.open("win_bins/neckFrames.bin", ios::in | ios::binary);
+		fin.read((char*)chiNeckFrames, sizeof(chiNeckFrames));
+		fin.close();
 
-	fin.open("win_bins/scoresFrame.bin", ios::in | ios::binary);
-	fin.read((char*)chiScoresFrame, sizeof(chiScoresFrame));
-	fin.close();
+		fin.open("win_bins/scoresFrame.bin", ios::in | ios::binary);
+		fin.read((char*)chiScoresFrame, sizeof(chiScoresFrame));
+		fin.close();
 
-	fin.open("win_bins/scoresFrameGameOver.bin", ios::in | ios::binary);
-	fin.read((char*)chiScoresFrameGameOver, sizeof(chiScoresFrameGameOver));
-	fin.close();
+		fin.open("win_bins/scoresFrameGameOver.bin", ios::in | ios::binary);
+		fin.read((char*)chiScoresFrameGameOver, sizeof(chiScoresFrameGameOver));
+		fin.close();
 
-	fin.open("win_bins/timeStringFull.bin", ios::in | ios::binary);
-	fin.read((char*)chiTimeStringFull, sizeof(chiTimeStringFull));
-	fin.close();
+		fin.open("win_bins/timeStringFull.bin", ios::in | ios::binary);
+		fin.read((char*)chiTimeStringFull, sizeof(chiTimeStringFull));
+		fin.close();
 
-	fin.open("win_bins/timeStringEmpty.bin", ios::in | ios::binary);
-	fin.read((char*)chiTimeStringEmpty, sizeof(chiTimeStringEmpty));
-	fin.close();
+		fin.open("win_bins/timeStringEmpty.bin", ios::in | ios::binary);
+		fin.read((char*)chiTimeStringEmpty, sizeof(chiTimeStringEmpty));
+		fin.close();
+	}
+	catch (const iostream::failure&) {
+		cout << "Error reading/finding bin files. Make sure you have win_bins catalogue in game directory, or download it from github: " << endl
+			<< "https://github.com/evg-dragalev/coursework_2crs/tree/master/dev/im_vs_zg/im_vs_zg/win_bins " << endl
+			<< "Press any button to quit";
+		assert(true);
+		_getch();
+	}
 
-
-	//Определения буферов двойной буферизации
+	//Определения буферов для двойной буферизации
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	hNewScreenBuffer = CreateConsoleScreenBuffer(
 		GENERIC_READ |           	// доступ к чтению/записи
@@ -134,8 +143,7 @@ void Drawer::initDrawerPlatform() {
 	if (hStdout == INVALID_HANDLE_VALUE ||
 		hNewScreenBuffer == INVALID_HANDLE_VALUE){
 		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
-		cout << "[Drawer::initDrawerPlatform()]: CreateConsoleScreenBuffer Err";
-		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
+		cout << "[Drawer::initDrawerPlatform()]: CreateConsoleScreenBuffer Err Code - "<< GetLastError();
 	}
 }
 
@@ -196,7 +204,7 @@ void Drawer::drawScores(int scores) {
 	writeToConsole(coordDestPoint, coordBufSize, chiDigitsArr[scores%10]);
 }
 
-void Drawer::drawHero(side heroSide){
+void Drawer::drawHero(side heroSide) {
 	COORD coordBufSize;
 	COORD coordDestPoint;
 
@@ -280,7 +288,7 @@ void Drawer::drawTimer(int timerTicks) {
 	COORD coordBufSize;
 	COORD coordDestPoint;
 
-	coordDestPoint.X = 54;
+	coordDestPoint.X = 55;
 	coordDestPoint.Y = 0;
 
 	coordBufSize.X = 22;
@@ -425,7 +433,6 @@ void Drawer::updateScreen() {
 	if (!SetConsoleActiveScreenBuffer(*phVisibleBuffer)) {
 		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
 		cout << "[Drawer::updateScreen()]:SetConsoleActiveScreenBuffer Err";
-		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
 	}
 }
 
@@ -433,6 +440,5 @@ Drawer::~Drawer() {
 	if (!SetConsoleActiveScreenBuffer(hStdout)) {
 		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
 		cout << "[Drawer::~Drawer()]:SetConsoleActiveScreenBuffer Err";
-		SetConsoleCursorPosition(hStdout, { 0, CONSOLE_HEIGHT });
 	}
 }
