@@ -5,31 +5,32 @@ using namespace std;
 void init();
 map<string, double> readConfig();
 double getMapValue(map<string, double> cfgMap, string valName);
+int readHighScore();
+void saveHighScore(int hs);
 
 int main() {
-	init();
-	int iHighScores = 0;
+	int iHighScores = readHighScore();
 	int iCurrScores;
 
-	Drawer::updateConsoleTitle(iHighScores);
+	init();
 
-	Session *session = new Session();
-	iCurrScores = session->run();
-	iHighScores = iCurrScores;
+	Session *session;
 
-	int iKeyCode = 1;
+	int iKeyCode = SPACEBAR_KEYCODE;
 	while (iKeyCode != ESCAPE_KEYCODE) {
+		Drawer::updateConsoleTitle(iHighScores);
 		if (iKeyCode == SPACEBAR_KEYCODE) {
-			session->~Session();
-			Drawer::updateConsoleTitle(iHighScores);
 			session = new Session();
 			iCurrScores = session->run();
 			if (iCurrScores > iHighScores) {
 				iHighScores = iCurrScores;
 			}
+			session->~Session();
 		}
 		iKeyCode = ((iKeyCode = _getch()) == 224) ? getch() : iKeyCode;
 	}
+
+	saveHighScore(iHighScores);
 
 	return 0;
 }
@@ -64,7 +65,6 @@ map<string, double> readConfig() {
 	map <string, double> cfgMap;
 	ifstream cfgIn("settings.cfg", ios::in);
 	try {
-
 		int cycleLimit = 0;
 		char tmp;
 		string cfgVarName;
@@ -99,4 +99,21 @@ double getMapValue(map<string, double> cfgMap, string valName) {
 	else {
 		return 0;
 	}
+}
+
+int readHighScore() {
+	int hs = 0;
+	ifstream hsin(HIGHSCORES_FILE, ios::binary);
+	if (hsin || !hsin.eof()) {
+		hsin >> hs;
+	}
+	hsin.close();
+
+	return hs;
+}
+
+void saveHighScore(int hs) {
+	ofstream hsout(HIGHSCORES_FILE, ios::binary);
+	hsout << hs;
+	hsout.close();
 }
