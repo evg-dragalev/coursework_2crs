@@ -10,7 +10,7 @@ Application& Application::Instance() {
 }
 
 Application::Application() {
-	iHighScores = readHighScore();
+	iHighScores = readHighScores();
 
 	map <string, double> cfgMap = readConfig();
 
@@ -43,6 +43,7 @@ map<string, double> Application::readConfig() {
 	map <string, double> cfgMap;
 	ifstream cfgIn(CONFIG_FILE, ios::in);
 	try {
+		if (!cfgIn || cfgIn.eof()) throw "Error opening\reading config file, or empty";
 		int cycleLimit = 0;
 		char tmp;
 		string cfgVarName;
@@ -79,7 +80,7 @@ double Application::getMapValue(map<string, double> cfgMap, string valName) {
 	}
 }
 
-int Application::readHighScore() {
+int Application::readHighScores() {
 	int hs = 0;
 	ifstream hsin(HIGHSCORES_FILE, ios::binary);
 	if (hsin || !hsin.eof()) {
@@ -90,7 +91,7 @@ int Application::readHighScore() {
 	return hs;
 }
 
-void Application::saveHighScore(int hs) {
+void Application::saveHighScores(int hs) {
 	ofstream hsout(HIGHSCORES_FILE, ios::binary);
 	hsout << hs;
 	hsout.close();
@@ -118,5 +119,5 @@ void Application::run() {
 }
 
 Application::~Application() {
-	saveHighScore(iHighScores);
+	saveHighScores(iHighScores);
 }

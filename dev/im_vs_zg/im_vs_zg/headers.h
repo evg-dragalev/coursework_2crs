@@ -18,5 +18,3 @@ const int SPACEBAR_KEYCODE = 32;
 const int LEFTARROW_KEYCODE = 75;
 const int RIGHTARROW_KEYCODE = 77;
 const int ESCAPE_KEYCODE = 27;
-
-const char HIGHSCORES_FILE[] = "hs.sc";

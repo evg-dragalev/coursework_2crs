@@ -30,6 +30,7 @@ CHAR_INFO Drawer::chiTimeStringEmpty[22];		//22
 
 using namespace std;
 
+
 void Drawer::initDrawerPlatform(double updateScreenDelay) {
 	UPDATE_SCREEN_DELAY = (updateScreenDelay > 0) ? updateScreenDelay : UPDATE_SCREEN_DELAY;
 
@@ -40,86 +41,149 @@ void Drawer::initDrawerPlatform(double updateScreenDelay) {
 	//Чтение тайлов
 	try {
 		ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/crashFromLeft.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiCrashFromLeft, sizeof(chiCrashFromLeft));
 		fin.close();
 
 		fin.open("win_bins/crashFromLeftSpike.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/crashFromLeftSpike.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiCrashFromLeftSpike, sizeof(chiCrashFromLeftSpike));
 		fin.close();
 
 		fin.open("win_bins/crashFromRight.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/crashFromRight.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiCrashFromRight, sizeof(chiCrashFromRight));
 		fin.close();
 
 		fin.open("win_bins/crashFromRightSpike.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/crashFromRightSpike.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiCrashFromRightSpike, sizeof(chiCrashFromRightSpike));
 		fin.close();
 
 		fin.open("win_bins/digitsArr.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/digitsArr.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiDigitsArr, sizeof(chiDigitsArr));
 		fin.close();
 
 		fin.open("win_bins/frame.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/frame.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiFrame, sizeof(chiFrame));
 		fin.close();
 
 		fin.open("win_bins/gameOver.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/gameOver.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiGameOver, sizeof(chiGameOver));
 		fin.close();
 
 		fin.open("win_bins/heroAtcBottom.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroAtcBottom.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroAtcBottom, sizeof(chiHeroAtcBottom));
 		fin.close();
 
 		fin.open("win_bins/heroAtcHead.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroAtcHead.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroAtcHead, sizeof(chiHeroAtcHead));
 		fin.close();
 
 		fin.open("win_bins/heroDead.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroDead.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroDead, sizeof(chiHeroDead));
 		fin.close();
 
 		fin.open("win_bins/heroDeadL.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroDeadL.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroDeadL, sizeof(chiHeroDeadL));
 		fin.close();
 
 		fin.open("win_bins/heroDeadR.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroDeadR.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroDeadR, sizeof(chiHeroDeadR));
 		fin.close();
 
 		fin.open("win_bins/heroLeft.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroLeft.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroLeft, sizeof(chiHeroLeft));
 		fin.close();
 
 		fin.open("win_bins/heroLeftAtc.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroLeftAtc.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroLeftAtc, sizeof(chiHeroLeftAtc));
 		fin.close();
 
 		fin.open("win_bins/heroRight.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroRight.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroRight, sizeof(chiHeroRight));
 		fin.close();
 
 		fin.open("win_bins/heroRightAtc.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/heroRightAtc.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiHeroRightAtc, sizeof(chiHeroRightAtc));
 		fin.close();
 
 		fin.open("win_bins/neckFrames.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/neckFrames.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiNeckFrames, sizeof(chiNeckFrames));
 		fin.close();
 
 		fin.open("win_bins/scoresFrame.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/scoresFrame.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiScoresFrame, sizeof(chiScoresFrame));
 		fin.close();
 
 		fin.open("win_bins/scoresFrameGameOver.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/scoresFrameGameOver.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiScoresFrameGameOver, sizeof(chiScoresFrameGameOver));
 		fin.close();
 
 		fin.open("win_bins/timeStringFull.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/timeStringFull.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiTimeStringFull, sizeof(chiTimeStringFull));
 		fin.close();
 
 		fin.open("win_bins/timeStringEmpty.bin", ios::in | ios::binary);
+		fin.seekg(0, ios::end);
+		if (!fin || (long)fin.tellg() == 0) throw "Error, bin file not found or empty win_bins/timeStringEmpty.bin";
+		fin.seekg(0, ios::beg);
 		fin.read((char*)chiTimeStringEmpty, sizeof(chiTimeStringEmpty));
 		fin.close();
 	}
@@ -127,8 +191,15 @@ void Drawer::initDrawerPlatform(double updateScreenDelay) {
 		cout << "Error reading/finding bin files. Make sure you have win_bins catalogue in game directory, or download it from github: " << endl
 			<< "https://github.com/evg-dragalev/coursework_2crs/tree/master/dev/im_vs_zg/im_vs_zg/win_bins " << endl
 			<< "Press any button to quit";
-		assert(true);
 		_getch();
+		exit(2);
+	}
+	catch (const char* err) {
+		cout << err << ". You can download anu missing files from github: " << endl
+			<< "https://github.com/evg-dragalev/coursework_2crs/tree/master/dev/im_vs_zg/im_vs_zg/win_bins " << endl
+			<< "Press any button to quit";
+		_getch();
+		exit(3);
 	}
 
 	//Определения буферов для двойной буферизации

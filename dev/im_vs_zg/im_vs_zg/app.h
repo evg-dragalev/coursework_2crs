@@ -15,8 +15,8 @@ class Application {
 
 	std::map<std::string, double> readConfig();
 	double getMapValue(std::map<std::string, double> cfgMap, std::string valName);
-	int readHighScore();
-	void saveHighScore(int hs);
+	int readHighScores();
+	void saveHighScores(int hs);
 
 public:
 	static Application& Instance();
