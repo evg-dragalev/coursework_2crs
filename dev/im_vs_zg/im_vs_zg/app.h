@@ -21,5 +21,4 @@ class Application {
 public:
 	static Application& Instance();
 	void run();
-
 };

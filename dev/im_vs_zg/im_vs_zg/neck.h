@@ -17,7 +17,5 @@ public:
 	Neck();
 	void cyclePop();
 	side getCurrSpikeSide();
-	side getNextSpikeSide();
 	side* getSpikeSeq();
-
 };

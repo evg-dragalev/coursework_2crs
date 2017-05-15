@@ -5,8 +5,8 @@
 class Session {
 public:
 	static const int DECREASE_POINTS_AMOUNT = 7;
-
 	static void init(int dp[DECREASE_POINTS_AMOUNT]);
+
 	Session();
 	//Вернет количество набранных очков
 	int run();
@@ -17,7 +17,6 @@ public:
 		}
 		return false;
 	};
-
 private:
 	static int DECREASE_POINT[DECREASE_POINTS_AMOUNT];
 

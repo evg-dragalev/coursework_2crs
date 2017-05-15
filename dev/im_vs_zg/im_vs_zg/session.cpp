@@ -96,17 +96,16 @@ int Session::run() {
 				drawer->updateScreen();
 			}
 			break;
-		case ESCAPE_KEYCODE: //esc
+		case ESCAPE_KEYCODE: 
 			bGameOver = true;
 			break;
-		case RIGHTARROW_KEYCODE: //стрелка вправо
+		case RIGHTARROW_KEYCODE: 
 			bGameOver = !chopResult(RIGHT);
 			break;
-		case LEFTARROW_KEYCODE: //стрелка влево
+		case LEFTARROW_KEYCODE: 
 			bGameOver = !chopResult(LEFT);
 			break;
 		default:
-			throw "error";
 			break;
 		}
 		if (!bGameOver) iKeyCode = timer->runTick(timer->getTickLength());

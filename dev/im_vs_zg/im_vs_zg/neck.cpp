@@ -5,27 +5,27 @@ const int Neck::VISIBLE_NECK_SEGM_AMOUNT = 4;
 void Neck::setSegmentFrame(NeckSegment* a) {
 	if (a->bIsEven) {
 		srand(time(0)); 
-		int r = rand() % 8;
+		int r = rand() % 9;
 		switch (r) {
-		case 0:
 		case 1:
 		case 2:
-			a->spikeSide = LEFT;
-			break;
 		case 3:
 		case 4:
+			a->spikeSide = LEFT;
+			break;
+		case 0:
 			a->spikeSide = NONE;
 			break;
 		case 5:
 		case 6:
 		case 7:
+		case 8:
 			a->spikeSide = RIGHT;
 			break;
 		default:
 			std::cerr << "[neck.setSegmentFrame]: Something went wrong";
 			break;
 		}
-//		std::cout << "[neck.setSegmentFrame: a->spikeside] " << a->spikeSide <<" "<<r<< std::endl;
 	}
 	else {
 		a->spikeSide = NONE;
@@ -41,7 +41,7 @@ Neck::Neck() {
 	for (int i = 0; i < NECK_SEGM_AMOUNT; i++) {
 		pointer->next = new NeckSegment();			//выделение памяти
 		pointer->next->bIsEven = !pointer->bIsEven; //инициализация сегмента
-		setSegmentFrame(pointer->next);			//инициализация сегмента
+		setSegmentFrame(pointer->next);				//инициализация сегмента
 
 		pointer = pointer->next; 
 	}
@@ -62,9 +62,6 @@ side Neck::getCurrSpikeSide() {
 	return front->spikeSide;
 }
 
-side Neck::getNextSpikeSide() {
-	return front->next->spikeSide;
-}
 side* Neck::getSpikeSeq() {
 	side* spikeSeq = new side[VISIBLE_NECK_SEGM_AMOUNT];
 	NeckSegment *p = front;

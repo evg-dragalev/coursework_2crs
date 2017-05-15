@@ -55,7 +55,7 @@ map<string, double> Application::readConfig() {
 		}
 	}
 	catch (const ifstream::failure&) {
-		cout << "Error reaading/finding config file. The game will run with standart settings\n"
+		cout << "Error reading/finding config file. The game will run with standart settings\n"
 			<< "Press any key to continue\n";
 		cfgMap.clear();
 		_getch();

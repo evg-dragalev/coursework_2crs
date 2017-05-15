@@ -38,7 +38,6 @@ void Drawer::initDrawerPlatform(double updateScreenDelay) {
 	snprintf(modConCommand, 30, "MODE CON: COLS=%d LINES=%d", CONSOLE_WIDTH, CONSOLE_HEIGHT+1);
 	system(modConCommand);
 
-	//Чтение тайлов
 	try {
 		ifstream fin("win_bins/crashFromLeft.bin", ios::in | ios::binary);
 		fin.seekg(0, ios::end);
@@ -195,7 +194,7 @@ void Drawer::initDrawerPlatform(double updateScreenDelay) {
 		exit(2);
 	}
 	catch (const char* err) {
-		cout << err << ". You can download anu missing files from github: " << endl
+		cout << err << ". You can download any missing files from github: " << endl
 			<< "https://github.com/evg-dragalev/coursework_2crs/tree/master/dev/im_vs_zg/im_vs_zg/win_bins " << endl
 			<< "Press any button to quit";
 		_getch();
@@ -410,8 +409,7 @@ void Drawer::drawGameOver(int scores) {
 void Drawer::drawChop(side neckCurrSeg, side heroPosition) {
 	COORD coordBufSize;
 	COORD coordDestPoint;
-
-
+	
 	if (heroPosition == LEFT) {
 		coordBufSize.X = 5;
 		coordBufSize.Y = 1;
