@@ -47,7 +47,7 @@ void Drawer::readTile(char* str, streamsize count, char filepath[]){
 		exit(2);
 	}
 	catch (const char* err) {
-		cout << err << ". You can download any missing files from github: " << endl
+		cout << err << " " <<filepath << ". You can download any missing files from github: " << endl
 			<< "https://github.com/evg-dragalev/coursework_2crs/tree/master/dev/im_vs_zg/im_vs_zg/win_bins " << endl
 			<< "Press any button to quit";
 		_getch();
@@ -249,8 +249,10 @@ void Drawer::drawTimer(int timerTicks) {
 	coordBufSize.Y = 1;
 	writeToConsole(coordDestPoint, coordBufSize, chiTimeStringEmpty);
 
-	coordBufSize.X = timerTicks;
-	writeToConsole(coordDestPoint, coordBufSize, chiTimeStringFull);
+	if (timerTicks != 0) {
+		coordBufSize.X = timerTicks;
+		writeToConsole(coordDestPoint, coordBufSize, chiTimeStringFull);
+	}
 }
 
 void Drawer::drawGameOver(int scores) {
