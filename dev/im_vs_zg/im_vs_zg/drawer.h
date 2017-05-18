@@ -5,6 +5,7 @@ class Drawer {
 public:
 	static void initDrawerPlatform(double updateScreenDelay);
 	static void updateConsoleTitle(int iHightScores);
+	static void readTile(char* str, std::streamsize count, char filepath[]);
 
 	Drawer();
 	~Drawer();
